@@ -14,16 +14,19 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
+    @CrossOrigin(origins = "*")
     public AuthResponse login(@Valid @RequestBody LoginRequest request) {
         return authService.login(request);
     }
 
     @PostMapping("/refresh")
+    @CrossOrigin(origins = "*")
     public AuthResponse refresh(@Valid @RequestBody RefreshTokenRequest request) {
         return authService.refresh(request);
     }
 
     @PostMapping("/logout")
+    @CrossOrigin(origins = "*")
     public void logout(@RequestHeader(value = "Authorization", required = false) String authorizationHeader,
                        @Valid @RequestBody LogoutRequest request) {
         String accessToken = null;

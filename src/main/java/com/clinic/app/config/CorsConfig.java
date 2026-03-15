@@ -18,7 +18,11 @@ public class CorsConfig {
 
         config.setAllowCredentials(true);
 
-        config.setAllowedOriginPatterns(List.of("*"));
+        config.setAllowedOrigins(List.of(
+                "http://localhost:3000",
+                "http://127.0.0.1:3000",
+                "http://15.207.107.248:3000"
+        ));
 
         config.setAllowedHeaders(List.of("*"));
 

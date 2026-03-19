@@ -283,6 +283,7 @@ com.clinic.app
 #### Users — `/api/v1/users`
 | Method | Path | Roles | Description |
 |--------|------|-------|-------------|
+| GET | `/me` | ALL | Get logged-in user's profile |
 | GET | `/` | ADMIN | List all users |
 | GET | `/{id}` | ADMIN | Get user by id |
 | PATCH | `/{id}` | ADMIN | Update fullName, phone, email |

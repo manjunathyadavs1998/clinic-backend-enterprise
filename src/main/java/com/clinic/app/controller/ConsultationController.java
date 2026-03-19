@@ -20,7 +20,6 @@ public class ConsultationController {
     private final ConsultationService consultationService;
 
     @PostMapping
-    @CrossOrigin(origins = "*")
     @PreAuthorize("hasAnyRole('ADMIN','RECEPTIONIST')")
     public ConsultationResponse create(@Valid @RequestBody CreateConsultationRequest request,
                                        @AuthenticationPrincipal UserDetails userDetails) {
@@ -28,21 +27,18 @@ public class ConsultationController {
     }
 
     @GetMapping
-    @CrossOrigin(origins = "*")
     @PreAuthorize("hasAnyRole('ADMIN','DOCTOR','RECEPTIONIST')")
     public List<ConsultationResponse> getAll() {
         return consultationService.getAllConsultations();
     }
 
     @GetMapping("/{id}")
-    @CrossOrigin(origins = "*")
     @PreAuthorize("hasAnyRole('ADMIN','DOCTOR','RECEPTIONIST')")
     public ConsultationResponse getById(@PathVariable Long id) {
         return consultationService.getConsultationById(id);
     }
 
     @PatchMapping("/{id}/status")
-    @CrossOrigin(origins = "*")
     @PreAuthorize("hasAnyRole('ADMIN','DOCTOR','RECEPTIONIST')")
     public ConsultationResponse updateStatus(@PathVariable Long id,
                                              @Valid @RequestBody UpdateConsultationStatusRequest request,
@@ -51,7 +47,6 @@ public class ConsultationController {
     }
 
     @PatchMapping("/{id}/doctor-notes")
-    @CrossOrigin(origins = "*")
     @PreAuthorize("hasAnyRole('ADMIN','DOCTOR')")
     public ConsultationResponse updateNotes(@PathVariable Long id,
                                             @Valid @RequestBody UpdateDoctorNotesRequest request,
@@ -60,7 +55,6 @@ public class ConsultationController {
     }
 
     @PostMapping("/{id}/tests")
-    @CrossOrigin(origins = "*")
     @PreAuthorize("hasAnyRole('ADMIN','DOCTOR','RECEPTIONIST')")
     public List<ConsultationTest> addTests(@PathVariable Long id,
                                            @Valid @RequestBody AddConsultationTestsRequest request,
@@ -69,7 +63,6 @@ public class ConsultationController {
     }
 
     @GetMapping("/{id}/tests")
-    @CrossOrigin(origins = "*")
     @PreAuthorize("hasAnyRole('ADMIN','DOCTOR','RECEPTIONIST')")
     public List<ConsultationTest> getTests(@PathVariable Long id) {
         return consultationService.getConsultationTests(id);

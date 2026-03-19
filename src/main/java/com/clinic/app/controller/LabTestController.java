@@ -22,6 +22,12 @@ public class LabTestController {
         return labTestService.getAll();
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','DOCTOR','RECEPTIONIST')")
+    public LabTestResponse getById(@PathVariable Long id) {
+        return labTestService.getById(id);
+    }
+
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public LabTestResponse create(@Valid @RequestBody CreateLabTestRequest request) {

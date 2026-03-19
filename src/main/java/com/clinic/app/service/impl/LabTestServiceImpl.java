@@ -32,6 +32,12 @@ public class LabTestServiceImpl implements LabTestService {
     }
 
     @Override
+    public LabTestResponse getById(Long id) {
+        return map(labTestRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("LabTest not found with id: " + id)));
+    }
+
+    @Override
     public LabTestResponse update(Long id, UpdateLabTestRequest request) {
         LabTest labTest = labTestRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("LabTest not found with id: " + id));

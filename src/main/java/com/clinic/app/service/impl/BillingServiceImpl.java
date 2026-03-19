@@ -21,6 +21,11 @@ public class BillingServiceImpl implements BillingService {
     private final ConsultationTestRepository consultationTestRepository;
 
     @Override
+    public List<BillResponse> getAllBills() {
+        return billingRepository.findAll().stream().map(this::map).toList();
+    }
+
+    @Override
     public BillResponse generateBill(Long consultationId) {
         Consultation consultation = consultationRepository.findById(consultationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Consultation not found: " + consultationId));

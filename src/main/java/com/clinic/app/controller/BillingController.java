@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/billing")
 @RequiredArgsConstructor
@@ -18,6 +20,12 @@ public class BillingController {
     @PreAuthorize("hasAnyRole('ADMIN','RECEPTIONIST')")
     public BillResponse generate(@PathVariable Long consultationId) {
         return billingService.generateBill(consultationId);
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN','DOCTOR','RECEPTIONIST')")
+    public List<BillResponse> getAll() {
+        return billingService.getAllBills();
     }
 
     @GetMapping("/{billId}")

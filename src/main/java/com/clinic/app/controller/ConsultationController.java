@@ -67,4 +67,10 @@ public class ConsultationController {
     public List<ConsultationTest> getTests(@PathVariable Long id) {
         return consultationService.getConsultationTests(id);
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void delete(@PathVariable Long id) {
+        consultationService.deleteConsultation(id);
+    }
 }

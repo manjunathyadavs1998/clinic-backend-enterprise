@@ -24,6 +24,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     private final UserRepository userRepository;
     private final LabTestRepository labTestRepository;
     private final ConsultationTestRepository consultationTestRepository;
+    private final BillingRepository billingRepository;
 
     @Override
     public ConsultationResponse createConsultation(CreateConsultationRequest request, String createdByUsername) {
@@ -110,6 +111,14 @@ public class ConsultationServiceImpl implements ConsultationService {
     public List<ConsultationTest> getConsultationTests(Long consultationId) {
         Consultation consultation = getEntity(consultationId);
         return consultationTestRepository.findByConsultation(consultation);
+    }
+
+    @Override
+    public void deleteConsultation(Long id) {
+        Consultation consultation = getEntity(id);
+        billingRepository.findByConsultation(consultation).ifPresent(billingRepository::delete);
+        consultationTestRepository.deleteAll(consultationTestRepository.findByConsultation(consultation));
+        consultationRepository.delete(consultation);
     }
 
     private Consultation getEntity(Long id) {

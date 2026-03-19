@@ -13,4 +13,5 @@ public interface ConsultationService {
     ConsultationResponse updateDoctorNotes(Long id, UpdateDoctorNotesRequest request, String username);
     List<ConsultationTest> addTests(Long consultationId, AddConsultationTestsRequest request, String username);
     List<ConsultationTest> getConsultationTests(Long consultationId);
+    void deleteConsultation(Long id);
 }

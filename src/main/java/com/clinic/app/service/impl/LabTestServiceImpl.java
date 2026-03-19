@@ -2,6 +2,7 @@ package com.clinic.app.service.impl;
 
 import com.clinic.app.dto.labtest.*;
 import com.clinic.app.entity.LabTest;
+import com.clinic.app.exception.ResourceNotFoundException;
 import com.clinic.app.repository.LabTestRepository;
 import com.clinic.app.service.LabTestService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,16 @@ public class LabTestServiceImpl implements LabTestService {
     @Override
     public List<LabTestResponse> getAll() {
         return labTestRepository.findAll().stream().map(this::map).toList();
+    }
+
+    @Override
+    public LabTestResponse update(Long id, UpdateLabTestRequest request) {
+        LabTest labTest = labTestRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("LabTest not found with id: " + id));
+        if (request.getName() != null) labTest.setName(request.getName());
+        if (request.getCost() != null) labTest.setCost(request.getCost());
+        if (request.getActive() != null) labTest.setActive(request.getActive());
+        return map(labTestRepository.save(labTest));
     }
 
     private LabTestResponse map(LabTest labTest) {

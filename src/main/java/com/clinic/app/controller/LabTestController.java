@@ -27,4 +27,10 @@ public class LabTestController {
     public LabTestResponse create(@Valid @RequestBody CreateLabTestRequest request) {
         return labTestService.create(request);
     }
+
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public LabTestResponse update(@PathVariable Long id, @Valid @RequestBody UpdateLabTestRequest request) {
+        return labTestService.update(id, request);
+    }
 }

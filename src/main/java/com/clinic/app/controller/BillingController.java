@@ -20,6 +20,12 @@ public class BillingController {
         return billingService.generateBill(consultationId);
     }
 
+    @GetMapping("/{billId}")
+    @PreAuthorize("hasAnyRole('ADMIN','DOCTOR','RECEPTIONIST')")
+    public BillResponse getById(@PathVariable Long billId) {
+        return billingService.getBillById(billId);
+    }
+
     @GetMapping("/consultations/{consultationId}")
     @PreAuthorize("hasAnyRole('ADMIN','DOCTOR','RECEPTIONIST')")
     public BillResponse getByConsultationId(@PathVariable Long consultationId) {

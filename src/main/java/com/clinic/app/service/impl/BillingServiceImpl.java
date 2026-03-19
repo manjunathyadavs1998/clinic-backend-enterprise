@@ -50,6 +50,13 @@ public class BillingServiceImpl implements BillingService {
     }
 
     @Override
+    public BillResponse getBillById(Long billId) {
+        Billing billing = billingRepository.findById(billId)
+                .orElseThrow(() -> new ResourceNotFoundException("Bill not found: " + billId));
+        return map(billing);
+    }
+
+    @Override
     public BillResponse updatePayment(Long billId, UpdatePaymentRequest request) {
         Billing billing = billingRepository.findById(billId)
                 .orElseThrow(() -> new ResourceNotFoundException("Bill not found: " + billId));

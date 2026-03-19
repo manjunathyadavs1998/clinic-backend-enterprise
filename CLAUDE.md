@@ -1,3 +1,4 @@
+
 # Clinic Backend Enterprise — CLAUDE.md
 
 ## Project Overview
@@ -32,7 +33,7 @@ Spring Boot 3.2.5 / Java 17 REST API for clinic management with JWT authenticati
 │  ┌───────────────────────────────────────┐  │
 │  │         Controller Layer              │  │
 │  │  Auth | Doctor | Consultation        │  │
-│  │  Billing | LabTest                   │  │
+│  │  Billing | LabTest | User            │  │
 │  └───────────────────────────────────────┘  │
 │                                             │
 │  ┌───────────────────────────────────────┐  │
@@ -93,7 +94,8 @@ com.clinic.app
 │   ├── DoctorController.java        # /api/v1/doctors
 │   ├── ConsultationController.java  # /api/v1/consultations
 │   ├── BillingController.java       # /api/v1/billing
-│   └── LabTestController.java       # /api/v1/lab-tests
+│   ├── LabTestController.java       # /api/v1/lab-tests
+│   └── UserController.java          # /api/v1/users
 │
 ├── dto/
 │   ├── auth/        LoginRequest, AuthResponse, RefreshTokenRequest, LogoutRequest
@@ -103,6 +105,7 @@ com.clinic.app
 │   │                AddConsultationTestsRequest
 │   ├── doctor/      CreateDoctorRequest, DoctorResponse, UpdateDoctorAvailabilityRequest
 │   ├── labtest/     CreateLabTestRequest, LabTestResponse, UpdateLabTestRequest
+│   ├── user/        UserResponse, UpdateUserRequest, ChangePasswordRequest
 │   └── common/      ApiErrorResponse
 │
 ├── entity/
@@ -150,7 +153,8 @@ com.clinic.app
     ├── BillingService.java  +  impl/BillingServiceImpl.java
     ├── ConsultationService.java  +  impl/ConsultationServiceImpl.java
     ├── DoctorService.java  +  impl/DoctorServiceImpl.java
-    └── LabTestService.java  +  impl/LabTestServiceImpl.java
+    ├── LabTestService.java  +  impl/LabTestServiceImpl.java
+    └── UserService.java  +  impl/UserServiceImpl.java
 ```
 
 ---
@@ -275,6 +279,16 @@ com.clinic.app
 | POST | `/` | ADMIN |
 | PATCH | `/{id}` | ADMIN |
 | DELETE | `/{id}` | ADMIN |
+
+#### Users — `/api/v1/users`
+| Method | Path | Roles | Description |
+|--------|------|-------|-------------|
+| GET | `/` | ADMIN | List all users |
+| GET | `/{id}` | ADMIN | Get user by id |
+| PATCH | `/{id}` | ADMIN | Update fullName, phone, email |
+| PATCH | `/{id}/password` | ADMIN | Change password (min 6 chars) |
+| PATCH | `/{id}/toggle-active` | ADMIN | Enable / disable user account |
+| DELETE | `/{id}` | ADMIN | Delete user (blocked if doctor profile exists) |
 
 ---
 

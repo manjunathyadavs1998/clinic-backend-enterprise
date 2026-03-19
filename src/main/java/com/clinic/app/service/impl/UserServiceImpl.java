@@ -25,6 +25,13 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
+    public UserResponse getProfile(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + username));
+        return map(user);
+    }
+
+    @Override
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream().map(this::map).toList();
     }

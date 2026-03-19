@@ -7,6 +7,8 @@ import com.clinic.app.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +19,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping("/me")
+    public UserResponse getProfile(@AuthenticationPrincipal UserDetails userDetails) {
+        return userService.getProfile(userDetails.getUsername());
+    }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")

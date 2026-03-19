@@ -7,6 +7,7 @@ import com.clinic.app.dto.user.UserResponse;
 import java.util.List;
 
 public interface UserService {
+    UserResponse getProfile(String username);
     List<UserResponse> getAllUsers();
     UserResponse getUserById(Long id);
     UserResponse updateUser(Long id, UpdateUserRequest request);

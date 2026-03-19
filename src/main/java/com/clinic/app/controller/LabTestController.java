@@ -33,4 +33,10 @@ public class LabTestController {
     public LabTestResponse update(@PathVariable Long id, @Valid @RequestBody UpdateLabTestRequest request) {
         return labTestService.update(id, request);
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void delete(@PathVariable Long id) {
+        labTestService.delete(id);
+    }
 }

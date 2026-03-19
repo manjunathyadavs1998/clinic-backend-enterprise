@@ -41,6 +41,13 @@ public class LabTestServiceImpl implements LabTestService {
         return map(labTestRepository.save(labTest));
     }
 
+    @Override
+    public void delete(Long id) {
+        if (!labTestRepository.existsById(id))
+            throw new ResourceNotFoundException("LabTest not found with id: " + id);
+        labTestRepository.deleteById(id);
+    }
+
     private LabTestResponse map(LabTest labTest) {
         return LabTestResponse.builder()
                 .id(labTest.getId())

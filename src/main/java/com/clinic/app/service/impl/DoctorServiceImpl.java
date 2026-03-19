@@ -74,6 +74,14 @@ public class DoctorServiceImpl implements DoctorService {
         return map(doctorRepository.save(doctor));
     }
 
+    @Override
+    public void deleteDoctor(Long doctorId) {
+        Doctor doctor = getEntity(doctorId);
+        User user = doctor.getUser();
+        doctorRepository.delete(doctor);
+        userRepository.delete(user);
+    }
+
     private Doctor getEntity(Long id) {
         return doctorRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Doctor not found: " + id));

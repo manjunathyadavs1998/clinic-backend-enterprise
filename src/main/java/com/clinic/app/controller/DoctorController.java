@@ -46,4 +46,10 @@ public class DoctorController {
                                              @Valid @RequestBody UpdateDoctorAvailabilityRequest request) {
         return doctorService.updateAvailability(id, request);
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void delete(@PathVariable Long id) {
+        doctorService.deleteDoctor(id);
+    }
 }

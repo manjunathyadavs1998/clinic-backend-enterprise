@@ -63,6 +63,13 @@ public class BillingServiceImpl implements BillingService {
         return map(billingRepository.save(billing));
     }
 
+    @Override
+    public void deleteBill(Long billId) {
+        Billing billing = billingRepository.findById(billId)
+                .orElseThrow(() -> new ResourceNotFoundException("Bill not found: " + billId));
+        billingRepository.delete(billing);
+    }
+
     private BillResponse map(Billing billing) {
         return BillResponse.builder()
                 .billId(billing.getId())

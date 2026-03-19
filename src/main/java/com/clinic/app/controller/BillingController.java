@@ -32,4 +32,10 @@ public class BillingController {
                                       @Valid @RequestBody UpdatePaymentRequest request) {
         return billingService.updatePayment(billId, request);
     }
+
+    @DeleteMapping("/{billId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void delete(@PathVariable Long billId) {
+        billingService.deleteBill(billId);
+    }
 }

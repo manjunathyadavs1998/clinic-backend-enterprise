@@ -7,4 +7,5 @@ public interface BillingService {
     BillResponse generateBill(Long consultationId);
     BillResponse getBillByConsultationId(Long consultationId);
     BillResponse updatePayment(Long billId, UpdatePaymentRequest request);
+    void deleteBill(Long billId);
 }

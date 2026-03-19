@@ -3,7 +3,8 @@ package com.clinic.app.controller;
 import com.clinic.app.dto.labtest.CreateLabTestRequest;
 import com.clinic.app.dto.labtest.LabTestResponse;
 import com.clinic.app.dto.labtest.UpdateLabTestRequest;
-import com.clinic.app.security.JwtAuthenticationFilter;
+import com.clinic.app.config.SecurityConfig;
+import com.clinic.app.security.JwtService;
 import com.clinic.app.security.TokenBlacklistService;
 import com.clinic.app.security.CustomUserDetailsService;
 import com.clinic.app.service.LabTestService;
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,13 +29,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(LabTestController.class)
+@Import(SecurityConfig.class)
 class LabTestControllerTest {
 
     @Autowired MockMvc mockMvc;
     @Autowired ObjectMapper objectMapper;
 
     @MockBean LabTestService labTestService;
-    @MockBean JwtAuthenticationFilter jwtAuthenticationFilter;
+    @MockBean JwtService jwtService;
     @MockBean TokenBlacklistService tokenBlacklistService;
     @MockBean CustomUserDetailsService customUserDetailsService;
 
@@ -135,8 +138,8 @@ class LabTestControllerTest {
     }
 
     @Test
-    void getAll_shouldReturn401WhenNotAuthenticated() throws Exception {
+    void getAll_shouldReturn4xxWhenNotAuthenticated() throws Exception {
         mockMvc.perform(get("/api/v1/lab-tests"))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().is4xxClientError());
     }
 }

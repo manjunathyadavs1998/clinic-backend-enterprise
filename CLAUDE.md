@@ -33,7 +33,7 @@ Spring Boot 3.2.5 / Java 17 REST API for clinic management with JWT authenticati
 │  ┌───────────────────────────────────────┐  │
 │  │         Controller Layer              │  │
 │  │  Auth | Doctor | Consultation        │  │
-│  │  Billing | LabTest | User            │  │
+│  │  Billing | LabTest | User | Dashboard│  │
 │  └───────────────────────────────────────┘  │
 │                                             │
 │  ┌───────────────────────────────────────┐  │
@@ -95,7 +95,8 @@ com.clinic.app
 │   ├── ConsultationController.java  # /api/v1/consultations
 │   ├── BillingController.java       # /api/v1/billing
 │   ├── LabTestController.java       # /api/v1/lab-tests
-│   └── UserController.java          # /api/v1/users
+│   ├── UserController.java          # /api/v1/users
+│   └── DashboardController.java     # /api/v1/dashboard
 │
 ├── dto/
 │   ├── auth/        LoginRequest, AuthResponse, RefreshTokenRequest, LogoutRequest
@@ -106,6 +107,7 @@ com.clinic.app
 │   ├── doctor/      CreateDoctorRequest, DoctorResponse, UpdateDoctorAvailabilityRequest
 │   ├── labtest/     CreateLabTestRequest, LabTestResponse, UpdateLabTestRequest
 │   ├── user/        UserResponse, UpdateUserRequest, ChangePasswordRequest
+│   ├── dashboard/   DashboardStatsResponse
 │   └── common/      ApiErrorResponse
 │
 ├── entity/
@@ -154,7 +156,8 @@ com.clinic.app
     ├── ConsultationService.java  +  impl/ConsultationServiceImpl.java
     ├── DoctorService.java  +  impl/DoctorServiceImpl.java
     ├── LabTestService.java  +  impl/LabTestServiceImpl.java
-    └── UserService.java  +  impl/UserServiceImpl.java
+    ├── UserService.java  +  impl/UserServiceImpl.java
+    └── DashboardService.java  +  impl/DashboardServiceImpl.java
 ```
 
 ---
@@ -279,6 +282,11 @@ com.clinic.app
 | POST | `/` | ADMIN |
 | PATCH | `/{id}` | ADMIN |
 | DELETE | `/{id}` | ADMIN |
+
+#### Dashboard — `/api/v1/dashboard`
+| Method | Path | Roles | Description |
+|--------|------|-------|-------------|
+| GET | `/stats` | ADMIN | Clinic summary stats (users, doctors, consultations, billing, lab tests) |
 
 #### Users — `/api/v1/users`
 | Method | Path | Roles | Description |
